@@ -33,7 +33,7 @@ jobs:
             echo "TARGETBASEURL not replaced correctly" && exit 1
           fi
       
-      - name: Check if strings were replaced in file test.txt
+      - name: Check if strings were replaced in file test1.txt
         run: |
           if grep -q "systemUnderTest: my_system_under_test" testfiles/test1.txt; then
             echo "SYSTEMUNDERTEST replaced correctly"
