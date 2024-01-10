@@ -21,6 +21,7 @@ jobs:
           replacements: 'SYSTEMUNDERTEST=my_system_under_test,TARGETBASEURL=https://my-target-base-url.com,ARTIFACTID=my-artifact-id'
 
       - name: Check if strings were replaced in file test.txt
+        shell: bash
         run: |
           if [[ "$RUNNER_OS" == "Windows_NT" ]]; then
             cmd /c 'findstr /C:"systemUnderTest: my_system_under_test" testfiles/test.txt || exit /b 1'
@@ -31,6 +32,7 @@ jobs:
           fi
       
       - name: Check if strings were replaced in file test1.txt
+        shell: bash
         run: |
           if [[ "$RUNNER_OS" == "Windows_NT" ]]; then
             cmd /c 'findstr /C:"systemUnderTest: my_system_under_test" testfiles/test1.txt || exit /b 1'
