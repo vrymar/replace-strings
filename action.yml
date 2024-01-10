@@ -1,0 +1,12 @@
+name: 'replace-strings'
+description: 'Replace strings in files'
+inputs:
+  files:
+    description: 'Comma-separated list of files to replace strings in'
+    required: true
+  replacements:
+    description: 'Comma-separated list of replacements in the format FIND=REPLACE'
+    required: true
+runs:
+  using: 'node16'
+  main: 'main.js'

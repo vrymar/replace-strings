@@ -1,0 +1,34 @@
+name: Test GitHub Actions on Ubuntu, macOS, and Windows
+
+on: [pull_request, push]
+
+jobs:
+  test:
+    continue-on-error: true
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+
+    name: Test with os ${{ matrix.os }}
+    steps: 
+      - uses: actions/checkout@v3
+
+      - name: Replace strings in files
+        uses: ./
+        with:
+          files: 'test.txt,test1.txt'
+          replacements: 'SYSTEMUNDERTEST=my_system_under_test,TARGETBASEURL=https://my-target-base-url.com,ARTIFACTID=my-artifact-id'
+
+      - name: Check if strings were replaced in files
+        uses: GuillaumeFalourd/assert-command-line-output@v2.2
+        with:
+          command_line: |
+            cat test.txt
+            cat test1.txt
+          contains: |
+            SYSTEMUNDERTEST=my_system_under_test
+            TARGETBASEURL=https://my-target-base-url.com
+            ARTIFACTID=my-artifact-id
+          expected_result: PASSED
+        
