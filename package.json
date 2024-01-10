@@ -13,8 +13,8 @@
     "keywords": [
       "github-action"
     ],
-    "author": "",
-    "license": "ISC",
+    "author": "Vitalii Rymar",
+    "license": "MIT",
     "bugs": {
       "url": "https://github.com/vrymar/replace-strings/issues"
     },
