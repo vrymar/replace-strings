@@ -24,15 +24,10 @@ jobs:
         uses: GuillaumeFalourd/assert-command-line-output@v2.2
         with:
           command_line: cat testfiles/test.txt
-          contains: |
-            systemUnderTest: my_system_under_test
-            targetBaseUrl: https://my-target-base-url.com      
+          contains: "systemUnderTest: my_system_under_test\ntargetBaseUrl: https://my-target-base-url.com"
 
       - name: Check if strings were replaced in file test1.txt
         uses: GuillaumeFalourd/assert-command-line-output@v2.2
         with:
           command_line: cat testfiles/test1.txt
-          contains: |
-            systemUnderTest: my_system_under_test
-            targetBaseUrl: https://my-target-base-url.com
-            artifactId: my-artifact-id
+          contains: "systemUnderTest: my_system_under_test\ntargetBaseUrl: https://my-target-base-url.com\nartifactId: my-artifact-id"
