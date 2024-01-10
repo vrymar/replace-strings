@@ -17,15 +17,15 @@ jobs:
       - name: Replace strings in files
         uses: ./
         with:
-          files: 'test.txt,test1.txt'
+          files: 'testfiles/test.txt,testfiles/test1.txt'
           replacements: 'SYSTEMUNDERTEST=my_system_under_test,TARGETBASEURL=https://my-target-base-url.com,ARTIFACTID=my-artifact-id'
 
       - name: Check if strings were replaced in files
         uses: GuillaumeFalourd/assert-command-line-output@v2.2
         with:
           command_line: |
-            cat test.txt
-            cat test1.txt
+            cat testfiles/test.txt
+            cat testfiles/test1.txt
           contains: |
             SYSTEMUNDERTEST=my_system_under_test
             TARGETBASEURL=https://my-target-base-url.com
