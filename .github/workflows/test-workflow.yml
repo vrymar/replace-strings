@@ -22,31 +22,22 @@ jobs:
 
       - name: Check if strings were replaced in file test.txt
         run: |
-          if grep -q "systemUnderTest: my_system_under_test" testfiles/test.txt; then
-            echo "SYSTEMUNDERTEST replaced correctly"
+          if [[ "$RUNNER_OS" == "Windows_NT" ]]; then
+            cmd /c 'findstr /C:"systemUnderTest: my_system_under_test" testfiles/test.txt || exit /b 1'
+            cmd /c 'findstr /C:"targetBaseUrl: https://my-target-base-url.com" testfiles/test.txt || exit /b 1'
           else
-            echo "SYSTEMUNDERTEST not replaced correctly" && exit 1
-          fi
-          if grep -q "targetBaseUrl: https://my-target-base-url.com" testfiles/test.txt; then
-            echo "TARGETBASEURL replaced correctly"
-          else
-            echo "TARGETBASEURL not replaced correctly" && exit 1
+            grep -q "systemUnderTest: my_system_under_test" testfiles/test.txt || exit 1
+            grep -q "targetBaseUrl: https://my-target-base-url.com" testfiles/test.txt || exit 1
           fi
       
       - name: Check if strings were replaced in file test1.txt
         run: |
-          if grep -q "systemUnderTest: my_system_under_test" testfiles/test1.txt; then
-            echo "SYSTEMUNDERTEST replaced correctly"
+          if [[ "$RUNNER_OS" == "Windows_NT" ]]; then
+            cmd /c 'findstr /C:"systemUnderTest: my_system_under_test" testfiles/test1.txt || exit /b 1'
+            cmd /c 'findstr /C:"targetBaseUrl: https://my-target-base-url.com" testfiles/test1.txt || exit /b 1'
+            cmd /c 'findstr /C:"artifactId: my-artifact-id" testfiles/test1.txt || exit /b 1'
           else
-            echo "SYSTEMUNDERTEST not replaced correctly" && exit 1
-          fi
-          if grep -q "targetBaseUrl: https://my-target-base-url.com" testfiles/test1.txt; then
-            echo "TARGETBASEURL replaced correctly"
-          else
-            echo "TARGETBASEURL not replaced correctly" && exit 1
-          fi
-          if grep -q "artifactId: my-artifact-id" testfiles/test1.txt; then
-            echo "ARTIFACTID replaced correctly"
-          else
-            echo "ARTIFACTID not replaced correctly" && exit 1
+            grep -q "systemUnderTest: my_system_under_test" testfiles/test1.txt || exit 1
+            grep -q "targetBaseUrl: https://my-target-base-url.com" testfiles/test1.txt || exit 1
+            grep -q "artifactId: my-artifact-id" testfiles/test1.txt || exit 1
           fi
