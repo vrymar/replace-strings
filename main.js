@@ -1,5 +1,4 @@
 const core = require('@actions/core');
-const fs = require('fs');
 const fs = require('fs').promises;
 const path = require('path');
 
@@ -18,13 +17,13 @@ async function run() {
     const replacements = core.getInput('replacements').split(',').map(r => r.split('='));
 
     for (const file of files) {
-      let content = fs.readFile(file.trim(), 'utf-8');
+      let content = await fs.readFile(file.trim(), 'utf-8');
 
       for (const [find, replace] of replacements) {
         content = content.replace(new RegExp(find.trim(), 'g'), replace.trim());
       }
 
-      fs.writeFile(file.trim(), content);
+      await fs.writeFile(file.trim(), content);
     }
   } catch (error) {
     core.setFailed(error.message);
