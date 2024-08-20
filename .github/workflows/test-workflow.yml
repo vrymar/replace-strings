@@ -48,7 +48,7 @@ jobs:
         uses: ./
         with:
           files: 'testfiles/testdirectory'
-          replacements: 'SYSTEMUNDERTEST=my_system_under_test_dir,TARGETBASEURL=https://my-target-base-url-dir.com,ARTIFACTID=my-artifact-id_dir'   
+          replacements: 'SYSTEMUNDERTEST=my_system_under_test_dir,TARGETBASEURL=https://my-target-base-url-dir.com,ARTIFACTID=my-artifact-id-dir'   
 
       - name: Check if strings were replaced in file test.txt
         shell: bash
