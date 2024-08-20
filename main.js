@@ -4,11 +4,11 @@ const path = require('path');
 
 async function run() {
   try {
-    const stats = fs.statSync(core.getInput('files'));
+    const stats = await fs.stat(core.getInput('files'));
 
     if (stats.isDirectory()) {
       console.log(`${dirPath} is a directory. Reading files paths...`);
-      const files = fs.readdirSync(dirPath);
+      const files = await fs.readdir(dirPath);
       const filePaths = files.map(file => path.join(dirPath, file)).join(',');
       console.log(`Found files: ${filePaths}`);
     } 
