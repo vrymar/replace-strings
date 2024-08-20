@@ -12,7 +12,7 @@ jobs:
 
     name: Test with os ${{ matrix.os }}
     steps: 
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Replace strings in files
         uses: ./
@@ -42,4 +42,34 @@ jobs:
             grep -q "systemUnderTest: my_system_under_test" testfiles/test1.txt || exit 1
             grep -q "targetBaseUrl: https://my-target-base-url.com" testfiles/test1.txt || exit 1
             grep -q "artifactId: my-artifact-id" testfiles/test1.txt || exit 1
+          fi
+
+      - name: Replace strings in each file in dir
+        uses: ./
+        with:
+          files: 'testfiles/testdirectory'
+          replacements: 'SYSTEMUNDERTEST=my_system_under_test_dir,TARGETBASEURL=https://my-target-base-url-dir.com,ARTIFACTID=my-artifact-id-dir'   
+
+      - name: Check if strings were replaced in file test.txt
+        shell: bash
+        run: |
+          if [[ "$RUNNER_OS" == "Windows_NT" ]]; then
+            cmd /c 'findstr /C:"systemUnderTest: my_system_under_test_dir" "testfiles/testdirectory/test dir.txt" || exit /b 1'
+            cmd /c 'findstr /C:"targetBaseUrl: https://my-target-base-url-dir.com" "testfiles/testdirectory/test dir.txt" || exit /b 1'
+          else
+            grep -q "systemUnderTest: my_system_under_test_dir" "testfiles/testdirectory/test dir.txt" || exit 1
+            grep -q "targetBaseUrl: https://my-target-base-url-dir.com" "testfiles/testdirectory/test dir.txt" || exit 1
+          fi
+      
+      - name: Check if strings were replaced in file test1.txt
+        shell: bash
+        run: |
+          if [[ "$RUNNER_OS" == "Windows_NT" ]]; then
+            cmd /c 'findstr /C:"systemUnderTest: my_system_under_test_dir" "testfiles/testdirectory/test1 dir.txt" || exit /b 1'
+            cmd /c 'findstr /C:"targetBaseUrl: https://my-target-base-url-dir.com" "testfiles/testdirectory/test1 dir.txt" || exit /b 1'
+            cmd /c 'findstr /C:"artifactId: my-artifact-id-dir" "testfiles/testdirectory/test1 dir.txt" || exit /b 1'
+          else
+            grep -q "systemUnderTest: my_system_under_test_dir" "testfiles/testdirectory/test1 dir.txt" || exit 1
+            grep -q "targetBaseUrl: https://my-target-base-url-dir.com" "testfiles/testdirectory/test1 dir.txt" || exit 1
+            grep -q "artifactId: my-artifact-id-dir" "testfiles/testdirectory/test1 dir.txt" || exit 1
           fi

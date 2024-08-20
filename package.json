@@ -1,25 +1,26 @@
 {
     "name": "replace-strings",
-    "version": "1.0.0",
+    "version": "1.1.0-SNAPSHOT",
     "description": "A GitHub action to replace strings in files",
     "main": "main.js",
     "scripts": {
-      "test": "echo \"Error: no test specified\" && exit 1"
+        "test": "echo \"Error: no test specified\" && exit 1"
     },
     "repository": {
-      "type": "git",
-      "url": "git+https://github.com/vrymar/replace-strings.git"
+        "type": "git",
+        "url": "git+https://github.com/vrymar/replace-strings.git"
     },
     "keywords": [
-      "github-action"
+        "github-action"
     ],
     "author": "Vitalii Rymar",
     "license": "MIT",
     "bugs": {
-      "url": "https://github.com/vrymar/replace-strings/issues"
+        "url": "https://github.com/vrymar/replace-strings/issues"
     },
     "homepage": "https://github.com/vrymar/replace-strings#readme",
     "dependencies": {
-      "@actions/core": "^1.10.1"
+        "@actions/core": "^1.10.1",
+        "replace-strings": "file:"
     }
-  }
+}
