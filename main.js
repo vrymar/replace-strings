@@ -3,6 +3,15 @@ const fs = require('fs').promises;
 
 async function run() {
   try {
+    const stats = fs.statSync(core.getInput('files'));
+
+    if (stats.isDirectory()) {
+      console.log(`${dirPath} is a directory. Reading files paths...`);
+      const files = fs.readdirSync(dirPath);
+      const filePaths = files.map(file => path.join(dirPath, file)).join(',');
+      console.log(`Found files: ${filePaths}`);
+    } 
+
     const files = core.getInput('files').split(',');
     const replacements = core.getInput('replacements').split(',').map(r => r.split('='));
 
