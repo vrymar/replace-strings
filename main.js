@@ -1,32 +1,33 @@
-import { getInput, setFailed } from '@actions/core';
-import { statSync, readdirSync, readFile, writeFile } from 'fs';
-import { join } from 'path';
+const core = require('@actions/core');
+const fs = require('fs');
+const fs = require('fs').promises;
+const path = require('path');
 
 async function run() {
   try {
-    const stats = statSync(getInput('files'));
+    const stats = fs.statSync(core.getInput('files'));
 
     if (stats.isDirectory()) {
       console.log(`${dirPath} is a directory. Reading files paths...`);
-      const files = readdirSync(dirPath);
-      const filePaths = files.map(file => join(dirPath, file)).join(',');
+      const files = fs.readdirSync(dirPath);
+      const filePaths = files.map(file => path.join(dirPath, file)).join(',');
       console.log(`Found files: ${filePaths}`);
     } 
 
-    const files = getInput('files').split(',');
-    const replacements = getInput('replacements').split(',').map(r => r.split('='));
+    const files = core.getInput('files').split(',');
+    const replacements = core.getInput('replacements').split(',').map(r => r.split('='));
 
     for (const file of files) {
-      let content = await readFile(file.trim(), 'utf-8');
+      let content = fs.readFile(file.trim(), 'utf-8');
 
       for (const [find, replace] of replacements) {
         content = content.replace(new RegExp(find.trim(), 'g'), replace.trim());
       }
 
-      await writeFile(file.trim(), content);
+      fs.writeFile(file.trim(), content);
     }
   } catch (error) {
-    setFailed(error.message);
+    core.setFailed(error.message);
   }
 }
 
